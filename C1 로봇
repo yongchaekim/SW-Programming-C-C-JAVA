@@ -1,6 +1,9 @@
 #include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
 #define MAXN (100)
-#define MAXQ (1000)
+#define MAXQ (10000)
 int H, W;//세로길이, 가로길이
 int map[MAXN+10][MAXN+10];//지도정보
 int sh, sw, sd;//시작 세로, 가로, 방향 //2
@@ -33,14 +36,15 @@ void InputData(void){
 
 void push(int h, int w, int d, int t) {
 	if(visited[h][w][d] == 1) return;
+	visited[h][w][d]=1;
 	struct node ele = {h,w,d,t};
 	queue[rear] = ele;
 	rear=(rear+1)%(MAXQ);
-	visited[h][w][d]=1;
+	
 }
 
 int BFS(void) {
-
+	memset(visited, 0, sizeof(visited));
 	rear=front=0;
 	
 	push(sh, sw, sd, 0);
@@ -50,13 +54,9 @@ int BFS(void) {
 		front=(front+1)%(MAXQ);
 		
 		// Case End
-		if((deq.r=eh)&&(deq.c==ew)&&(deq.d==ed)) {
-			
-			return deq.t;
-		}
+		if((deq.r==eh )&& (deq.c == ew) && (deq.d == ed)) return deq.t;
 		
-		printf("%d\n", deq.t);
-		
+
 		// GO K direction
 		for(int i=1; i<=3; i++) {
 			int nr=deq.r+dr[deq.d]*i;
