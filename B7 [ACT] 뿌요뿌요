@@ -1,0 +1,95 @@
+#include <stdio.h>
+#define MAXH (12)
+#define MAXW (6)
+char map[MAXH+2][MAXW+2];
+int visited[MAXH+2][MAXW+2];
+int count;
+int dh[]={-1, 1, 0, 0};
+int dw[]={0, 0, -1, 1};
+
+void InputData(void){
+	for (int i=1; i<=MAXH; i++){
+		scanf("%s", &map[i][1]);
+	}
+}
+
+void Init(void) {
+	for(int i=1; i<=MAXH; i++) {
+		for(int j=1; j<=MAXW; j++) {
+			visited[i][j] = 0;
+		}
+	}
+}
+
+void FloodFillFind(int h, int w, char color) {
+	if(map[h][w] != color) return;
+	if(visited[h][w] == 1) return;
+	count++;
+	visited[h][w] = 1;
+	for(int i=0; i<4; i++) {
+		FloodFillFind(h+dh[i], w+dw[i], color);
+	}
+}
+
+void FloodFillClean(int h, int w, char color) {
+	if(map[h][w] != color) return;
+	map[h][w]='.';
+	for(int i=0; i<4; i++) {
+		FloodFillClean(h+dh[i], w+dw[i], color);
+	}
+}
+
+void Down(void) {
+	int puyo;
+	for(int i=1; i<=MAXW; i++) {
+		for(int space = MAXH; space > 0; space--) {
+			if(map[space][i] != '.') continue;
+			for(puyo=space-1; (puyo>0) && (map[puyo][i] == '.'); puyo--);
+				if(puyo <= 0) break;
+				map[space][i] = map[puyo][i];
+				map[puyo][i] = '.';
+		}
+	}
+}
+
+int CleanUp(void) {
+	int flag = 0;
+	for(int i=1; i<=MAXH; i++) {
+		for(int j=1; j<=MAXW; j++) {
+			if(map[i][j] == '.') continue;
+			if(visited[i][j] == 1) continue;
+			count=0;
+			FloodFillFind(i, j, map[i][j]);
+			if(count < 4) continue;
+			FloodFillClean(i, j, map[i][j]);
+			flag = 1;
+		}
+	}
+	return flag;
+}
+
+
+
+int Solve(void) {
+	int combo = 0;
+	for(;;) {
+		Init();
+		if(CleanUp() == 0) break;
+		combo++;
+		Down();
+	}
+	return combo;
+}
+
+int main(void){
+	int T, t;
+	scanf("%d", &T);
+	for (t=1; t<=T; t++){
+		InputData();//입력받는 부분
+		int ans = Solve();
+		//여기서부터 작성
+
+		printf("%d\n", ans);//출력하는 부분
+	}
+	return 0;
+}
