@@ -1,0 +1,114 @@
+#include <stdio.h>
+#define MAXN (100)
+#define MAXX ((int)1e4+200)
+
+int N;
+int K;
+int R[MAXN+10];
+int C[MAXN+10];
+int L;
+int rear;
+int front;
+int X[MAXN+10];
+char CMD[MAXN+10];
+int map[MAXN+10][MAXN+10]; // 0 - empty, 1: snake, 2: fruit 
+int dr[]={0, 1, 0, -1};
+int dc[]={1, 0, -1, 0};
+int order[MAXX + 10];
+
+struct node {
+	int r;
+	int c;
+};
+
+struct node queue[MAXX+10];
+
+void InputData(void){
+    scanf("%d", &N);
+    scanf("%d", &K);
+    for (int i=0; i<K; i++){
+        scanf("%d %d", &R[i], &C[i]);
+    }
+    scanf("%d", &L);
+    for (int i=0; i<L; i++){
+        scanf("%d %c", &X[i], &CMD[i]);
+    }
+}
+
+void init(void)  {
+	for(int i=1; i<=N; i++) {
+		for(int j=1; j<=N; j++ ) {
+			map[i][j] = 0;
+		}
+	}
+}
+
+int Solve(void) {
+	 
+	//1. init(), 초기화
+	 rear=front=0;
+	int t=0;
+	int dir=0;
+	int r=1;
+	int c=1; 
+	init();
+
+
+	//2. 과일 지도에 표시, 명령 표시 (map, order 정보 만들기)
+	for(int i=0; i<K; i++) {
+		map[R[i]][C[i]] = 2;
+	} 
+	
+	for(int i=0; i<L; i++) {
+		order[X[i]] = (CMD[i] == 'L') ? 3 : 1;
+	}
+	
+	struct node ele = {1, 1};
+	queue[rear] = ele;
+	rear=(rear+1)%(MAXX*MAXX);
+	
+	//3. 시뮬레이션 
+	while(1) {
+		
+		if(order[t]) {
+			dir = (dir+order[t]) % 4;
+		}
+		r+=dr[dir];
+		c+=dc[dir];
+		
+		
+		if(r<1 || r>N || c<1 || c>N || map[r][c] == 1)
+		return t+1;
+		
+		//몸 줄일지 여부 확인 : 사과 존재 여부에 따라..
+		if(map[r][c] != 2) {
+			struct node deq = queue[front];
+			front=(front+1)%(MAXX*MAXX);
+			map[deq.r][deq.c] = 0;
+		} 
+		
+		// 다음 위치 몸 만들기
+		struct node ele = {r, c};
+		queue[rear] = ele;
+		rear=(rear+1)%(MAXX*MAXX);
+		map[r][c] = 1;
+		
+		t++; 
+		
+	}
+	
+	return -1; 
+}
+
+
+int main(void){
+    int ans = -1;
+
+    InputData();//입력받는 부분
+
+    //여기서부터 작성
+    ans = Solve();
+
+    printf("%d\n", ans);//출력하는 부분
+    return 0;
+}
