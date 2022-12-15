@@ -1,0 +1,79 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+int N;
+int sm[100000+10];
+int sd[100000+10];
+int em[100000+10];
+int ed[100000+10];
+
+struct node {
+	int s;
+	int e;
+};
+
+struct node flower[100000];
+
+void InputData(void){
+    scanf("%d", &N);
+    for (int i=0; i<N; i++){
+        scanf("%d %d %d %d", &sm[i], &sd[i], &em[i], &ed[i]);
+    }
+}
+
+int comp(const void *item1, const void *item2) {
+	
+	return ((struct node*)item1)->s - ((struct node*)item2)->s;
+/*	
+	struct node *a = (struct node *) item1;
+	struct node *b = (struct node *) item2;
+	return (a->s) - (b->s);
+	*/
+}
+
+int Solve(void) {
+	int cnt=0;
+	//1. 꽃 정보 정리하기: 피는 날, 지는날 정보 정수 변화
+	 for(int i=0; i<N; i++) {
+	 	struct node ele = {(sm[i]*100)+sd[i], (em[i]*100)+ed[i]};
+	 	flower[i] = ele;
+	 }
+	
+	//2. 꽃 정보 정렬: 피는 기준 오름차순 
+	qsort(flower, N, sizeof(flower[0]), comp);
+	//3. 탐색 초기화 
+	// 꽃 탐색 index : 첫번째 꽃 index
+	// 커버해야 하는 날짜 : 3월 1일 (3월 1일 피어있는 꽃 찾아야 함) 
+	int idx=0;
+	int e=301;
+	
+	//4. 탐색 Loop 
+	// 실행 조건 : 커버해야 할 날짜가 11월 30일 포함 이전날짜 일 경우 
+	while(e<=1130) {
+		int max_e = -1;
+		while(idx<N && flower[idx].s <= e) {
+			if(max_e < flower[idx].e ) {
+				max_e = flower[idx].e;
+			}
+			idx++;
+		} 
+		if(max_e < e) {
+			return 0;
+		}
+		cnt++;
+		e=max_e;
+	}
+	
+	return cnt;
+}
+
+int main(void){
+    int ans = -1;
+
+    InputData();// 입력받는 부분
+
+    // 여기서부터 작성
+	ans = Solve();
+    printf("%d\n", ans);// 출력하는 부분
+    return 0;
+}
