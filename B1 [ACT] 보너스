@@ -45,6 +45,8 @@ int Check(void) {
 int isPossible(int n, int b) {
 	// 1~n-1 <-> 관계 b금액 배정 가능 여부?
 	for(int i=1; i<n; i++) {
+		if(n==i) continue;
+		if(sol[i] == 0) continue;
 		if(link[i][n] && sol[i] <= b) return 0;
 		if(link[n][i] && sol[i] >= b) return 0;
 	} 
@@ -60,19 +62,21 @@ void Init(void) {
 
 int DFS(int n) {
 
+	/*
 	if(n > N) {
 		return Check();
-	}
-	/*
+	}*/
+	
+	
 	if(n>N) {
 		return 1;
 	}
-	*/
+	
 	
 	for(int i=2; i<=N; i++) {
 		// n 번 사람 -> i번 보너스 배정 
 		if(used[i]) continue;
-		
+		if(!isPossible(n, bonus[i])) continue;
 		used[i]=1;
 		sol[n] = bonus[i];
 		if(DFS(n+1)) return 1;
@@ -90,6 +94,7 @@ void Solve(void) {
 	//3 2번 직원부터 N번 직원까지 보너스 금액 배정하는 모든 경우의 수 시도 DFS 
 	//DFS(1, s[1], e[1]);
 	used[1] = 1;
+	Init();
 	DFS(2);
 }
 
