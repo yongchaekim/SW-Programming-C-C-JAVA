@@ -20,30 +20,31 @@ int isPossible(int a, int b) {
 }
 
 
-void DFSB(int n, int cnt, int sum) {
-	if(sol < cnt) sol = cnt;
-	if(n >= N) {
-		if(sol < cnt) sol = cnt;
+void DFSbinary(int n, int cnt, int sum) {
+	if(sol >= cnt + N - n) return; // 가지치기, 이전답 >= 현재까지 태운소 + 남은모든소
+	if(sol < cnt) sol = cnt; // 답 갱신 
+	if(n >= N) { // 종료조건 
 		return;
 	}
-	if(isPossible(sum, W[n])) DFSB(n+1, cnt+1, sum+W[n]);  // 태우는 경우 
-	DFSB(n+1, cnt, sum); // 안 태우는 경우
+	if(isPossible(sum, W[n]))
+	DFSbinary(n+1, cnt+1, sum+W[n]);  // 태우는 경우 (조건있음, 자리올림 발생 안해야 함) 
+	DFSbinary(n+1, cnt, sum); // 안 태우는 경우
  
 }
 
 
 void DFSmulti(int s, int cnt, int sum) {
-	if(sol >= cnt + N - s) return ;
-	if(sol < cnt) sol = cnt;
+	if(sol >= cnt + N - s) return; // 가지치기, 이전답 >= 현재까지 태운소 + 남은모든소 
+	if(sol < cnt) sol = cnt; //답 갱신
 	for(int i=s; i<N; i++) {
-		if(!isPossible(sum, W[i])) continue;
+		if(!isPossible(sum, W[i])) continue; // i번소는 자리올림 발생, skip 
 		DFSmulti(i+1, cnt+1, sum+W[i]);
 	}
 } 
 
 int Solve(void) {
 	sol=0;
-	DFSB(0, 0, 0); // 소인덱스, 태운마리수, 무게합 
+	DFSbinary(0, 0, 0); // 소인덱스, 태운마리수, 무게합 
 	return sol;	
 }
 
