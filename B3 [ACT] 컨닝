@@ -1,0 +1,52 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+#define MAXN ((int)1e5)
+int N;//개수
+int F[MAXN + 10];
+
+void InputData(void){
+	scanf("%d", &N);
+	for (int i=0; i<N; i++){
+		scanf("%d", &F[i]);
+	}
+}
+
+int comp(const void *a, const void *b) {
+	return *(int *)a - *(int *)b;
+}
+
+int BsLower(int s, int e, int d) {
+	int sol = e;
+	while(s<=e) {
+		int m=(s+e)/2;
+		if(F[m] >= d) {
+			sol=m;
+			e=m-1;
+		} else {
+			s=m+1;
+		}
+	}
+	return sol;
+}
+
+
+long long Solve(void) {
+	long long sum=0;
+	qsort(F, N, sizeof(F[0]), comp);
+	for(int i=1; i<N; i++) {
+		int min = (F[i] * 9 + 10 - 1) / 10;
+		int idx = BsLower(0, i, min);
+		sum += i-idx;
+	}
+	return sum;	
+}
+
+int main(void){
+	long long ans = -1;
+	InputData();// 입력받는 부분
+	ans = Solve();
+	// 여기서부터 작성
+	printf("%lld\n", ans);// 출력하는 부분
+	return 0;
+}
