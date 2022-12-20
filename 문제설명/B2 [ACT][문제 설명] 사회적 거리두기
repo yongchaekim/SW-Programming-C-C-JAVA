@@ -1,0 +1,126 @@
+농부 John은 전염성이 높은 COWVID-19이 발생한 이후, 소들의 건강이 걱정되었다. 
+병의 전염을 막기 위해서, 농부 John의 N마리 소들은 '사회적 거리두기'를 실행하기로 결정하고 농장 전체에 흩어졌다. (2<=N<=105)
+농부 John의 농장은 1차원 직선의 모양으로, M개의 서로 분리된 구간의 방목할 잔디가 구성되어 있다. (1<=M<=105)
+소는 D의 값을 최대화하기 위해 각각 잔디구간의 정수 지점에 위치하려고 한다. 여기서 D는 가장 가까운 소 두 마리 사이의 거리를 말한다. 소가 D의 가능한 가장 큰 값을 가질수 있도록 도와주자.
+(입력 예시에 대한 상황이 아래 '부가정보'에 그림으로 잘 표현되어 있다. 해당 내용을 참고하자.)
+* 입출력 Template이 필요한 경우 C 제출은 다음 코드를 복사하여 코드를 작성하시오.
+#include <stdio.h>
+#define MAXNM ((int)1e5)
+int N, M;//소마리수, 잔디구간 개수
+long long A[MAXNM+10];//잔디 구간 시작
+long long B[MAXNM+10];//잔디 구간 끝
+
+void InputData(void){
+	scanf("%d %d", &N, &M);
+	for (int i=0; i<M; i++){
+		scanf("%lld %lld", &A[i], &B[i]);
+	}
+}
+int main(void){
+	long long ans = -1;
+	InputData();//입력
+
+	//여기서 부터 작성
+
+	printf("%lld\n", ans);//출력
+	return 0;
+}
+* 입출력 Template이 필요한 경우 C++ 제출은 다음 코드를 복사하여 코드를 작성하시오.
+#include <iostream>
+using namespace std;
+#define MAXNM ((int)1e5)
+int N, M;//소마리수, 잔디구간 개수
+long long A[MAXNM+10];//잔디 구간 시작
+long long B[MAXNM+10];//잔디 구간 끝
+
+void InputData(){
+	cin >> N >> M;
+	for (int i=0 ; i<M ; i++){
+		cin >> A[i] >> B[i];
+	}
+}
+
+int main(){
+	ios_base::sync_with_stdio(false);
+	cin.tie(NULL);
+	cout.tie(NULL);
+	long long ans = -1;
+	InputData();// 입력받는 부분
+
+	// 여기서부터 작성
+
+	cout << ans << "\n";// 출력하는 부분
+	return 0;
+}
+* 입출력 Template이 필요한 경우 Java 제출은 다음 코드를 복사하여 코드를 작성하시오.
+import java.io.*;
+import java.util.*;
+public class Main {
+	int N, M;//소마리수, 잔디구간 개수
+	long A[];//잔디 구간 시작
+	long B[];//잔디 구간 끝
+
+	void InputData() throws IOException{
+		BufferedReader bf = new BufferedReader(new InputStreamReader(System.in));
+		String s[] = bf.readLine().split(" ");
+		N = Integer.parseInt(s[0]);
+		M = Integer.parseInt(s[1]);
+		A = new long[M];
+		B = new long[M];
+		for (int i=0; i<M; i++){
+			s = bf.readLine().split(" ");
+			A[i] = Long.parseLong(s[0]);
+			B[i] = Long.parseLong(s[1]);
+		}
+		bf.close();
+	}
+
+	public static void main(String[] args) throws IOException {
+		long ans = -1;
+		Main m = new Main();
+
+		m.InputData();//입력
+
+		// 여기서부터 작성
+
+		//출력
+		BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
+		bw.write(String.valueOf(ans) + "\n"); bw.flush();
+		bw.close();
+	}
+}
+* 입출력 Template이 필요한 경우 Python 제출은 다음 코드를 복사하여 코드를 작성하시오.
+# coding=utf-8
+import sys
+ 
+def Input_Data():
+    readl = sys.stdin.readline
+    N, M = map(int,readl().split())
+    intvals = [list(map(int,readl().split())) for _ in range(M)]
+    return N, M, intvals
+ 
+sol = -1
+#입력받는 부분
+N, M, intvals = Input_Data()
+ 
+# 여기서부터 작성
+
+ 
+# 출력하는 부분
+print(sol)
+
+입력 설명
+
+첫째 줄에는 N과 M이 주어진다. (2<=N<=105, 1<=M<=105)
+다음 M개 줄에는 잔디구간을 나타내는 두개의 정수 a,b가 주어진다.(0<=a<=b<=1018)
+구간이 겹치거나 같은 지점에서 만나는 경우는 존재하지 않는다. 그리고 소들은 각 구간의 끝지점에도 서있을 수 있다.
+출력 설명
+가능 최대값 D를 출력하라. 모든 소들의 쌍은 D이상 떨어져 있어야 한다.
+모든 입력은 0보다 큰 D값이 항상 존재한다.
+입력 예시
+5 3
+0 2
+4 7
+9 9
+출력 예시
+2
