@@ -1,0 +1,110 @@
+가로, 세로의 크기가 각각 100인 정사각형 모양의 흰색 도화지가 있다. 이 도화지 위에 가로, 세로의 크기가 각각 10인 정사각형 모양의 검은색 색종이를 색종이의 변과 도화지의 변이 평행하도록 붙인다. 이러한 방식으로 색종이를 한 장 또는 여러 장 붙인 후 색종이가 붙은 검은 영역의 둘레의 길이를 구하는 프로그램을 작성하시오.
+
+예를 들어 흰색 도화지 위에 네 장의 검은색 색종이를 <그림 1>과 같은 모양으로 붙였다면 검은색 영역의 둘레는 96 이 된다.
+* 입출력 Template이 필요한 경우 C 제출은 다음 코드를 복사하여 코드를 작성하시오.
+#include <stdio.h>
+
+int N;
+int A[100+10];
+int B[100+10];
+void InputData(void){
+    scanf("%d", &N);
+    for (int i=0; i<N; i++){
+        scanf("%d %d", &A[i], &B[i]);
+    }
+}
+
+int main(void){
+    int ans = -1;
+
+    InputData();// 입력받는 부분
+
+    // 여기서부터 작성
+
+    printf("%d\n", ans);// 출력하는 부분
+    return 0;
+}
+* 입출력 Template이 필요한 경우 C++ 제출은 다음 코드를 복사하여 코드를 작성하시오.
+#include <iostream>
+using namespace std;
+
+int N;
+int A[100+10];
+int B[100+10];
+void InputData(){
+    cin >> N;
+    for (int i=0; i<N; i++){
+        cin >> A[i] >> B[i];
+    }
+}
+
+int main(){
+    int ans = -1;
+
+    InputData();// 입력받는 부분
+
+    // 여기서부터 작성
+
+    cout << ans << endl;// 출력하는 부분
+    return 0;
+}
+* 입출력 Template이 필요한 경우 Java 제출은 다음 코드를 복사하여 코드를 작성하시오.
+import java.util.*;
+public class Main {
+	int N;
+	int A[];
+	int B[];
+
+	void InputData(){
+		Scanner in = new Scanner(System.in);
+		N = in.nextInt();
+		A = new int[N];
+		B = new int[N];
+		for (int i=0; i<N; i++){
+			A[i] = in.nextInt();
+			B[i] = in.nextInt();
+		}
+		in.close();
+	}
+
+	public static void main(String[] args) {
+		int ans = -1;
+		Main m = new Main();
+		m.InputData();//입력
+
+		// 여기서부터 작성
+
+		System.out.println(ans);//출력
+	}
+}
+* 입출력 Template이 필요한 경우 Python 제출은 다음 코드를 복사하여 코드를 작성하시오.
+import sys 
+
+def input_data(): 
+    readl = sys.stdin.readline 
+    N = int(readl()) 
+    info = [list(map(int, readl().split())) for _ in range(N)] 
+    return N, info 
+
+sol = 0 
+
+# 입력받는 부분 
+N, info = input_data() 
+
+# 여기서부터 작성 
+
+# 출력하는 부분 
+
+print(sol) 
+입력 설명
+첫째 줄에 색종이의 수가 주어진다. 이어 둘째 줄부터 한 줄에 하나씩 색종이를 붙인 위치가 주어진다. 색종이를 붙인 위치는 두 개의 자연수로 주어지는데 첫 번째 자연수는 색종이의 왼쪽 변과 도화지의 왼쪽 변 사이의 거리이고, 두 번째 자연수는 색종이의 아래쪽 변과 도화지의 아래쪽 변 사이의 거리이다. 색종이의 수는 100이하이며, 색종이가 도화지 밖으로 나가는 경우는 없다.
+출력 설명
+첫째 줄에 색종이가 붙은 검은 영역의 둘레의 길이를 출력한다.
+입력 예시
+4
+3 7
+5 2
+15 7
+13 14
+출력 예시
+96
