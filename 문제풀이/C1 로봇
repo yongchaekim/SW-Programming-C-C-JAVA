@@ -1,0 +1,91 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+#define MAXN (100)
+#define MAXQ (10000)
+int H, W;//세로길이, 가로길이
+int map[MAXN+10][MAXN+10];//지도정보
+int sh, sw, sd;//시작 세로, 가로, 방향 //2
+int eh, ew, ed;//도착 세로, 가로, 방향 //3
+int dr[]= {0,0,0,1,-1};
+int dc[]= {0,1,-1,0,0};
+int rear;
+int front;
+int visited[MAXN+10][MAXN+10][5];
+
+struct node {
+	int r;
+	int c;
+	int d;
+	int t;
+};
+
+struct node queue[MAXQ+10];
+
+void InputData(void){
+	scanf("%d %d", &H, &W);
+	for (int i=1; i<=H; i++){
+		for (int j=1; j<=W; j++){
+			scanf("%d", &map[i][j]);
+		}
+	}
+	scanf("%d %d %d", &sh, &sw, &sd);
+	scanf("%d %d %d", &eh, &ew, &ed);
+}
+
+void push(int h, int w, int d, int t) {
+	if(visited[h][w][d] == 1) return;
+	visited[h][w][d]=1;
+	struct node ele = {h,w,d,t};
+	queue[rear] = ele;
+	rear=(rear+1)%(MAXQ);
+	
+}
+
+int BFS(void) {
+	memset(visited, 0, sizeof(visited));
+	rear=front=0;
+	
+	push(sh, sw, sd, 0);
+	
+	while(rear != front) {
+		struct node deq = queue[front];
+		front=(front+1)%(MAXQ);
+		
+		// Case End
+		if((deq.r==eh )&& (deq.c == ew) && (deq.d == ed)) return deq.t;
+		
+
+		// GO K direction
+		for(int i=1; i<=3; i++) {
+			int nr=deq.r+dr[deq.d]*i;
+			int nc=deq.c+dc[deq.d]*i;
+			if((nr<1) || (nr>H) || (nc<1) || (nc>W)) break;
+			if(map[nr][nc]==1) break;
+			push(nr, nc, deq.d, deq.t+1);
+		}
+		
+		// Turn (동:1, 서:2, 남:3, 북:4) 
+		if(deq.d >= 3) {
+			push(deq.r, deq.c, 1, deq.t+1);
+			push(deq.r, deq.c, 2, deq.t+1);
+		} else{
+			push(deq.r, deq.c, 3, deq.t+1);
+			push(deq.r, deq.c, 4, deq.t+1);
+		}
+	}
+
+	
+	return -1;	
+}
+
+int main(void){
+	int ans = -1;
+	InputData();// 입력받는 부분
+
+	// 여기서부터 작성
+	ans=BFS();
+	printf("%d\n", ans);// 출력하는 부분
+	return 0;
+}
