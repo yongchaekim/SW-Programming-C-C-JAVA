@@ -1,0 +1,136 @@
+어떤 도시의 중심가는 N개의 동서방향 도로와 N개의 남북방향 도로로 구성되어 있다.
+모든 도로에는 도로 번호가 있으며 남북방향 도로는 왼쪽부터 1에서 시작하여 N까지 번호가 할당되어 있고 동서방향 도로는 위부터 1에서 시작하여 N까지 번호가 할당되어 있다. 또한 동서방향 도로 사이의 거리와 남북방향 도로 사이의 거리는 모두 1이다. 동서방향 도로와 남북방향 도로가 교차하는 교차로의 위치는 두 도로의 번호의 쌍인 (동서방향 도로 번호, 남북방향 도로 번호)로 나타낸다. N이 6인 경우의 예를 들면 다음과 같다.
+
+이 도시에는 두 대의 경찰차가 있으며 두 차를 경찰차1과 경찰차2로 부른다. 처음에는 항상 경찰차1은 (1, 1)의 위치에 있고 경찰차2는 (N, N)의 위치에 있다. 경찰 본부에서는 처리할 사건이 있으면 그 사건이 발생된 위치를 두 대의 경찰차 중 하나에 알려 주고, 연락 받은 경찰차는 그 위치로 가장 빠른 길을 통해 이동하여 사건을 처리한다. (하나의 사건은 한 대의 경찰차가 처리한다.) 그리고 사건을 처리 한 경찰차는 경찰 본부로부터 다음 연락이 올 때까지 처리한 사건이 발생한 위치에서 기다린다. 경찰 본부에서는 사건이 발생한 순서대로 두 대의 경찰차에 맡기려고 한다. 처리해야 될 사건들은 항상 교차로에서 발생하며 경찰 본부에서는 이러한 사건들을 나누어 두 대의 경찰차에 맡기되, 두 대의 경찰차들이 이동하는 거리의 합을 최소화 하도록 사건을 맡기려고 한다.
+예를 들어 앞의 그림처럼 N=6인 경우, 처리해야 하는 사건들이 3개 있고 그 사건들이 발생된 위치를 순서대로 (3, 5), (5, 5), (2, 3)이라고 하자. (3, 5)의 사건을 경찰차2에 맡기고 (5, 5)의 사건도 경 찰차2에 맡기며, (2, 3)의 사건을 경찰차1에 맡기면 두 차가 이동한 거리의 합은 4 + 2 + 3 = 9가 되고, 더 이상 줄일 수는 없다.
+처리해야 할 사건들이 순서대로 주어질 때, 두 대의 경찰차가 이동하는 거리의 합을 최소화 하도록 사건들을 맡기는 프로그램을 작성하시오.
+* 입출력 Template이 필요한 경우 C 제출은 다음 코드를 복사하여 코드를 작성하시오.
+#include <stdio.h>
+#define MAXW (20)
+int N;//도로의 개수
+int W;//사건의 개수
+struct POS{
+	int r, c;//세로, 가로
+};
+struct POS pos[MAXW+10];//사건 좌표
+
+void InputData(void) {
+	scanf("%d", &N);
+	scanf("%d", &W);
+	for (int i=0; i<W; i++){
+		scanf("%d %d", &pos[i].r, &pos[i].c);
+	}
+}
+
+int main(void) {
+	int ans = -1;
+	InputData();//입력받는 부분
+
+	//여기서부터 작성
+
+	printf("%d\n", ans);//출력하는 부분
+	return 0;
+}
+* 입출력 Template이 필요한 경우 C++ 제출은 다음 코드를 복사하여 코드를 작성하시오.
+#include <iostream>
+using namespace std;
+#define MAXW (20)
+int N;//도로의 개수
+int W;//사건의 개수
+struct POS{
+	int r, c;//세로, 가로
+};
+POS pos[MAXW+10];//사건 좌표
+
+void InputData() {
+	cin >> N;
+	cin >> W;
+	for (int i=0; i<W; i++){
+		cin >> pos[i].r >> pos[i].c;
+	}
+}
+
+int main() {
+	ios_base::sync_with_stdio(false);
+	cin.tie(NULL);
+	cout.tie(NULL);
+	int ans = -1;
+	InputData();//입력받는 부분
+
+	//여기서부터 작성
+
+	cout << ans << "\n";//출력하는 부분
+	return 0;
+}
+* 입출력 Template이 필요한 경우 Java 제출은 다음 코드를 복사하여 코드를 작성하시오.
+import java.io.*;
+import java.util.*;
+public class Main {
+	int N;//도로의 개수
+	int W;//사건의 개수
+	class POS{
+		int r, c;//세로, 가로
+		POS(int r, int c){
+			this.r=r; this.c=c;
+		}
+	}
+	POS pos[];//사건의 좌표
+
+	void InputData() throws IOException{
+		BufferedReader bf = new BufferedReader(new InputStreamReader(System.in));
+		N = Integer.parseInt(bf.readLine());
+		W = Integer.parseInt(bf.readLine());
+		pos = new POS[W+10]; 
+		for (int i=0; i<W; i++){
+			String s[] = bf.readLine().split(" ");
+			pos[i] = new POS(Integer.parseInt(s[0]), Integer.parseInt(s[1]));
+		}
+		bf.close();
+	}
+
+	public static void main(String[] args) throws IOException {
+		int ans = -1;
+		Main m = new Main();
+
+		m.InputData();//입력
+
+		// 여기서부터 작성
+
+		//출력
+		BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
+		bw.write(String.valueOf(ans) + "\n");
+		bw.flush();
+		bw.close();
+	}
+}
+* 입출력 Template이 필요한 경우 Python 제출은 다음 코드를 복사하여 코드를 작성하시오.
+import sys
+
+def Input_Data():
+    readl = sys.stdin.readline
+    N = int(readl())
+    W = int(readl())
+    pos = [list(map(int,readl().split())) for n in range(W)]
+    return N, W, pos
+
+sol = -1
+# 입력받는 부분
+N, W, pos = Input_Data()
+
+# 여기서부터 작성
+
+
+# 출력하는 부분
+print(sol)
+입력 설명
+입력 파일의 첫째 줄에는 동서방향 도로의 개수를 나타내는 정수 N(5≤N≤1,000)이 주어진다. 둘째 줄에는 처리해야 하는 사건의 개수를 나타내는 정수 W(1≤W≤20)가 주어진다. 셋째 줄부터 (W+2)번째 줄까지 사건이 발생된 위치가 한 줄에 하나씩 주어진다. 경찰차들은 이 사건들을 주어진 순서대로 처리해야 한다. 각 위치는 동서방향 도로 번호를 나 타내는 정수와 남북방향 도로 번호를 나타내는 정수로 주어지며 두 정수 사이에는 빈칸이 하나 있다. 두 사건이 발생한 위치가 같을 수 있다.
+출력 설명
+첫째 줄에 두 경찰차가 이동한 총 거리를 출력한다.
+입력 예시
+6
+3
+3 5
+5 5
+2 3
+출력 예시
+9
