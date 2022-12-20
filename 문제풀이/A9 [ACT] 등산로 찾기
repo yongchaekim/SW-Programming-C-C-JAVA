@@ -1,0 +1,96 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#define MAXN (102)
+#define INF (9999)
+#define MAX (10000)
+
+int N;//산크기
+int eh, ew;//목적지 위치 세로, 가로
+int map[MAXN][MAXN];
+int rear;
+int front;
+int visited[MAXN][MAXN];
+int dr[]={-1, 1, 0, 0};
+int dc[]={0, 0, -1, 1};
+
+struct node {
+	int r;
+	int c;
+};
+
+struct node queue[MAX];
+
+void InputData(void){
+    scanf("%d", &N);
+    scanf("%d %d", &eh, &ew);
+    for (int h=1; h<=N; h++){
+        for (int w=1; w<=N; w++){
+            scanf("%d", &map[h][w]);
+        }
+    }
+}
+
+
+void Refresh(void) {
+	for (int h=0; h<=N+1; h++){
+        for (int w=0; w<=N+1; w++){
+        	visited[h][w] = 9999;
+    	}
+	}	
+}
+
+void Print(void) {
+	for (int h=0; h<=N+1; h++){
+        for (int w=0; w<=N+1; w++){
+        	printf("%d ", visited[h][w]);
+    	}
+    	printf("\n");
+	}	
+}
+
+int BFS(void) {
+	Refresh();
+	rear=front = 0;
+	visited[0][0] = 0;
+	struct node ele = {0,0};
+	queue[rear] = ele;
+	rear=(rear+1)%(MAX);
+	
+	while(rear != front) {
+		struct node deq = queue[front];
+		front=(front+1)%(MAX);
+		
+		for(int i=0; i<4; i++) {
+			int nr=deq.r+dr[i];
+			int nc=deq.c+dc[i];
+			
+			if((nr<0)||(nr>N+1)||(nc<0) || (nc>N+1)) continue;
+				
+				int power = map[deq.r][deq.c] - map[nr][nc];
+				if(power < 0) power *= power;
+				
+				if(visited[nr][nc] > visited[deq.r][deq.c]+power) {
+					visited[nr][nc] = visited[deq.r][deq.c]+power;
+					struct node elem = {nr, nc};
+					queue[rear] = elem;
+					rear=(rear+1)%(MAX);
+				}
+				
+			
+		}
+	}
+	return visited[eh][ew];
+}
+
+
+int main(void){
+    int ans = -1;
+    InputData();//입력 받는 부분
+    
+    //여기서부터 작성
+	ans = BFS();
+	//Print();
+    printf("%d\n", ans);//출력하는 부분
+    return 0;
+}
