@@ -1,0 +1,113 @@
+영화 보는걸 좋아하는 철수가 드디어 연애를 하게 되었다. 여자친구랑 하루 종일 영화를 보려고 하는데 여자친구는 2시간 미만의 짧은 영화는 싫어한다.
+극장에 알아보니 N개의 영화가 상영될 예정이다.
+한 영화를 보는 중에 다른 영화를 볼 수는 없으며 영화가 끝난 후에 다른 영화를 볼 수 있다.
+한 영화의 종료시간과 다음에 보고자 하는 영화의 시작시간이 같다면 관람할 수 있는데 상영시간이 2시간 미만은 볼 수 없다.
+N개의 영화의 시작시간과 종료시간이 주어질 때 철수가 여자친구와 관람할 수 있는 최대 영화의 수를 구하라.
+* 입출력 Template이 필요한 경우 C 제출은 다음 코드를 복사하여 코드를 작성하시오.
+#include <stdio.h>
+#define MAXN ((int)1e5)
+int N;//영화수
+typedef struct{
+    int s, e;
+}DATA;
+DATA A[MAXN + 10];
+void InputData(void){
+    scanf("%d", &N);
+    for (int i=0; i<N; i++){
+        scanf("%d %d", &A[i].s, &A[i].e);
+    }
+}
+int main(void){
+    int ans = -1;
+    InputData();// 입력받는 부분
+
+    // 여기서부터 작성
+
+    printf("%d\n", ans);// 출력하는 부분
+    return 0;
+}
+* 입출력 Template이 필요한 경우 C++ 제출은 다음 코드를 복사하여 코드를 작성하시오.
+#include <iostream>
+using namespace std;
+#define MAXN ((int)1e5)
+int N;//영화수
+struct DATA{
+    int s, e;
+};
+DATA A[MAXN + 10];
+void InputData(){
+    cin >> N;
+    for (int i=0; i<N; i++){
+        cin >> A[i].s >> A[i].e;
+    }
+}
+
+int main(){
+	ios_base::sync_with_stdio(false);
+	cin.tie(NULL);
+	cout.tie(NULL);
+	int ans = -1;
+	InputData();//입력받는 부분
+
+	//여기서부터 작성
+
+	cout << ans << "\n";//출력하는 부분
+	return 0;
+} 
+* 입출력 Template이 필요한 경우 Java 제출은 다음 코드를 복사하여 코드를 작성하시오.
+import java.io.*;
+import java.util.*;
+public class Main {
+	int N;//영화수
+	class DATA{
+		int s, e;
+		DATA(int s, int e){
+			this.s=s; this.e=e;
+		}
+	};
+	DATA A[];
+
+	void InputData() throws IOException{
+		BufferedReader bf = new BufferedReader(new InputStreamReader(System.in));
+		N = Integer.parseInt(bf.readLine());
+		A = new DATA[N]; 
+		for (int i=0; i<N; i++){
+			String s[] = bf.readLine().split(" ");
+			A[i] = new DATA(Integer.parseInt(s[0]), Integer.parseInt(s[1]));
+
+		}
+		bf.close();
+	}
+
+	public static void main(String[] args) throws IOException {
+		int ans = -1;
+		Main m = new Main();
+		m.InputData();//입력
+
+		//여기서부터 작성
+
+		//출력
+		BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
+		bw.write(String.valueOf(ans) + "\n");
+		bw.flush();
+		bw.close();
+	}
+}
+
+입력 설명
+첫 줄에 영화의 수 N이 입력된다. (3≤N≤100,000)
+둘째 줄부터 N개의 줄에 영화시작시간과 종료시간이 공백으로 구분되어 입력된다.
+(1≤시간≤100,000,000) 종료시간이 시작시간보다 크다.
+
+출력 설명
+관람할 수 있는 최대영화의 수를 출력하라.
+
+입력 예시
+5
+7 8
+1 2
+18 20
+1 3
+13 15
+출력 예시
+3
