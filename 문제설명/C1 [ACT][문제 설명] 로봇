@@ -1,0 +1,159 @@
+많은 공장에서 로봇이 이용되고 있다. 우리 공장의 로봇은 바라보는 방향으로 궤도를 따라 움직이며 움직이는 방향은 동 서 남 북 가운데 하나이다. 로봇의 이동을 제어하는 명령어는 다음과 같이 두 가지이다.
+*명령 1. Go k
+- k 는 1 2 또는 3일 수 있다. 현재 향하고 있는 방향으로 k 칸만큼 움직인다.
+*명령 2. Turn dir 
+- dir 은 left 또는 right 이며 각각 왼쪽 또는 오른쪽으로 90° 회전한다.
+공장 내 궤도가 설치되어 있는 상태가 아래와 같이 0과 1로 이루어진 직사각형 모양으로 로봇에게 입력된다. 0은 궤도가 깔려 있어 로봇이 갈 수 있는 지점이고 1은 궤도가 없어 로봇이 갈 수 없는 지점이다. 로봇이 (4, 2) 지점에서 남쪽을 향하고 있을 때 이 로봇을 (2, 4) 지점에서 동쪽으로 향하도록 이동시키는 것은 아래와 같이 9번의 명령으로 가능하다.
+
+ 
+로봇의 현재 위치와 바라보는 방향이 주어졌을 때 로봇을 원하는 위치로 이동시키고 원하는 방향으로 바라보도록 하는데 최소 몇 번의 명령이 필요한지 구하는 프로그램을 작성하시오.
+* 입출력 Template이 필요한 경우 C 제출은 다음 코드를 복사하여 코드를 작성하시오.
+#include <stdio.h>
+#define MAXN (100)
+int H, W;//세로길이, 가로길이
+int map[MAXN+10][MAXN+10];//지도정보
+int sh, sw, sd;//시작 세로, 가로, 방향
+int eh, ew, ed;//도착 세로, 가로, 방향
+
+void InputData(void){
+	scanf("%d %d", &H, &W);
+	for (int i=1; i<=H; i++){
+		for (int j=1; j<=W; j++){
+			scanf("%d", &map[i][j]);
+		}
+	}
+	scanf("%d %d %d", &sh, &sw, &sd);
+	scanf("%d %d %d", &eh, &ew, &ed);
+}
+int main(void){
+	int ans = -1;
+	InputData();// 입력받는 부분
+
+	// 여기서부터 작성
+
+	printf("%d\n", ans);// 출력하는 부분
+	return 0;
+}
+* 입출력 Template이 필요한 경우 C++ 제출은 다음 코드를 복사하여 코드를 작성하시오.
+#include <iostream>
+using namespace std;
+#define MAXN (100)
+int H, W;//세로길이, 가로길이
+int map[MAXN+10][MAXN+10];//지도정보
+int sh, sw, sd;//시작 세로, 가로, 방향
+int eh, ew, ed;//도착 세로, 가로, 방향
+void InputData(){
+	cin >> H >> W;
+	for (int i=1; i<=H; i++){
+		for (int j=1; j<=W; j++){
+			cin >> map[i][j];
+		}
+	}
+	cin >> sh >> sw >> sd;
+	cin >> eh >> ew >> ed;
+}
+
+int main(){
+	ios_base::sync_with_stdio(false);
+	cin.tie(NULL);
+	cout.tie(NULL);
+	int ans = -1;
+
+	InputData();// 입력받는 부분
+
+	// 여기서부터 작성
+
+	cout << ans << "\n";// 출력하는 부분
+	return 0;
+}
+* 입출력 Template이 필요한 경우 Java 제출은 다음 코드를 복사하여 코드를 작성하시오.
+import java.io.*;
+import java.util.*;
+public class Main {
+	int H, W;//세로길이, 가로길이
+	int map[][];//지도정보
+	int sh, sw, sd;//시작 세로, 가로, 방향
+	int eh, ew, ed;//도착 세로, 가로, 방향
+
+	void InputData() throws IOException{
+		BufferedReader bf = new BufferedReader(new InputStreamReader(System.in));
+		String s[] = bf.readLine().split(" ");
+		H = Integer.parseInt(s[0]);
+		W = Integer.parseInt(s[1]);
+		map = new int[H+2][W+2];
+		for (int i=1; i<=H; i++){
+			s = bf.readLine().split(" ");
+			for (int j=1; j<=W; j++){
+				map[i][j] = Integer.parseInt(s[j-1]);
+			}
+		}
+		s = bf.readLine().split(" ");
+		sh = Integer.parseInt(s[0]);
+		sw = Integer.parseInt(s[1]);
+		sd = Integer.parseInt(s[2]);
+		s = bf.readLine().split(" ");
+		eh = Integer.parseInt(s[0]);
+		ew = Integer.parseInt(s[1]);
+		ed = Integer.parseInt(s[2]);
+		bf.close();
+	}
+
+	public static void main(String[] args) throws IOException {
+		int ans = -1;
+		Main m = new Main();
+
+		m.InputData();//입력
+
+		// 여기서부터 작성
+
+		//출력
+		BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
+		bw.write(String.valueOf(ans) + "\n");
+		bw.flush();
+		bw.close();
+	}
+}
+* 입출력 Template이 필요한 경우 Python 제출은 다음 코드를 복사하여 코드를 작성하시오.
+
+
+import sys
+
+def input_data():
+    readl = sys.stdin.readline
+    R, C = map(int, readl().split())
+    map_factory = [[1]+list(map(int, readl().split()))+[1] if 1<=r<=R else [1]*(C+2) for r in range(R+2)]
+    status_s = list(map(int,readl().split()))
+    status_e = list(map(int,readl().split()))
+    return R, C, map_factory, status_s, status_e
+
+sol = -1
+# 입력받는 부분
+
+R, C, map_factory, status_s, status_e = input_data()
+
+ 
+
+# 여기서부터 작성
+
+ 
+
+# 출력하는 부분
+
+print(sol)
+
+입력 설명
+첫째 줄에 공장 내 궤도 설치 상태를 나타내는 직사각형의 세로 길이 M과 가로 길이 N이 빈칸을 사이에 두고 주어진다. 이 때 M과 N은 둘 다 100이하의 자연수이다.
+이어 M줄에 걸쳐 한 줄에 N개씩 각 지점의 궤도 설치 상태를 나타내는 숫자 0 또는 1이 빈칸을 사이에 두고 주어진다. 다음 줄에는 로봇의 출발 지점의 위치 (행과 열의 번호)와 바라보는 방향이 빈칸을 사이에 두고 주어진다. 마지막 줄에는 로봇의 도착 지점의 위치 (행과 열의 번호)와 바라보는 방향이 빈칸을 사이에 두고 주어진다. 방향은 동쪽이 1, 서쪽이 2, 남쪽이 3, 북쪽이 4로 주어진다. 출발지점에서 도착지점까지는 항상 이동이 가능하다.
+출력 설명
+첫째 줄에 로봇을 도착 지점에 원하는 방향으로 이동시키는데 필요한 최소 명령 횟수를 출력한다.
+입력 예시
+5 6
+0 0 0 0 0 0
+0 1 1 0 1 0
+0 1 0 0 0 0
+0 0 1 1 1 0
+1 0 0 0 0 0
+4 2 3
+2 4 1
+출력 예시
+9
