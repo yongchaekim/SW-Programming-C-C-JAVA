@@ -1,0 +1,86 @@
+#include <stdio.h>
+#include <stdlib.h>
+#define MAXNM ((int)1e5)
+
+int N, M;//소마리수, 잔디구간 개수
+long long A[MAXNM+10];//잔디 구간 시작
+long long B[MAXNM+10];//잔디 구간 끝
+int idx;
+
+struct node {
+	long long s;
+	long long e;
+};
+
+struct node land[MAXNM+10];
+
+int comp(const void* a, const void* b) {
+	if (((struct node *)a)->s < ((struct node *)b)->s) return -1;
+	else if	(((struct node *)a)->s > ((struct node *)b)->s) return 1;
+	else return 0;
+} 	
+
+void InputData(void){
+	scanf("%d %d", &N, &M);
+	for (int i=0; i<M; i++){
+		scanf("%lld %lld", &A[i], &B[i]);
+	}
+}
+
+
+int isPossible(long long d) {
+	long long cow=land[0].s;
+	int idx=0;
+	for(int i=0; i<N-1;i++) {
+		cow += d;
+		while(idx<M && cow > land[idx].e) {
+			idx++;
+		}
+		if(idx == M) return 0;
+		
+		if(cow < land[idx].s) {
+			cow = land[idx].s;
+		}
+	}
+	return 1;
+} 
+
+long long Solve(void) {
+	long long sol=-1;
+	
+	//1. 구조체 배열에 저장 - 구간 정보 정렬을 위해 
+	for(int i=0; i<M; i++) {
+		struct node ele = {A[i], B[i]};
+		land[i] = ele;
+	}
+	
+	qsort(&land[0], M, sizeof(land[0]), comp);
+	
+	//2. 시작기준 오름차순 정렬 - 확인 과정에서 왼쪽 잔디부터 확인하기 위함
+	
+	//3. 이진탐색을 이용해서 답구하기(거리 두기 parameter d 가능 상황 최대값
+	long long s=0;
+	long long e=land[M-1].e-land[0].s;
+	
+	while(s<=e) {
+		int m=(s+e)/2;
+		if(isPossible(m)) {
+			sol=m;
+			s=m+1;
+		}else {
+			e=m-1;
+		}
+	}
+	
+	return sol; 
+}
+
+int main(void){
+	long long ans = -1;
+	InputData();//입력
+	ans = Solve();
+	//여기서 부터 작성
+
+	printf("%lld\n", ans);//출력
+	return 0;
+}
