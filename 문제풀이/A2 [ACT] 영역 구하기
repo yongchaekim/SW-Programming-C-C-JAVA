@@ -1,0 +1,126 @@
+#include <stdio.h>
+#include <stdlib.h>
+#define MAX (500)
+
+int M, N, K;//세로크기, 가로크기, 직사각형 개수
+int sx[MAX+10];
+int sy[MAX+10];
+int ex[MAX+10];
+int ey[MAX+10];
+int sol[MAX*MAX];
+int tmp[MAX*MAX];
+int Map[MAX+10][MAX+10];
+
+int rear;
+int front;
+
+struct Node {
+	int r;
+	int c;
+	int d;
+};
+
+struct Node queue[MAX*MAX];
+
+void InputData(){
+    scanf("%d %d %d", &M, &N, &K);
+    for (int i=0; i<K; i++){
+        scanf("%d %d %d %d", &sx[i], &sy[i], &ex[i], &ey[i]);
+    }
+}
+
+int comp(const void *a, const void *b) {
+	return *(int*)a - *(int*)b;
+}
+
+void OutputData(int ans){
+    printf("%d\n", ans);
+    qsort(sol, ans, sizeof(sol[0]), comp);
+    for (int i=0; i<ans; i++){
+        printf("%d ", sol[i]);
+    }
+    printf("\n");
+}
+
+int FloodFill(int r, int c) {
+	int dr[] = {0,0,1,-1};
+	int dc[] = {1,-1,0,0};
+	if(Map[r][c] != 2) return 0;
+	Map[r][c] = 3;
+	int cnt = 0;
+	for(int i=0; i<4; i++) {
+		cnt+=FloodFill(r+dr[i], c+dc[i]);
+	}
+	if(cnt < 4) {
+		struct Node ele = {r, c, 0};
+		Map[r][c] = 3;
+		queue[rear] = ele;
+		rear = (rear+1)%(MAX*MAX);
+	}
+	return 1;
+}
+int Find(void) {
+	int sum = 0;
+	while(rear != front) {
+		front = (front+1)%(MAX*MAX);
+		sum++;
+	}
+	return sum;
+}
+
+void Restruct(void) {
+	for(int i=0; i< N; i++) {
+		for(int j=0; j< M; j++) {
+			Map[i][j] = 2;
+		}
+	}
+}
+
+void Print(void) {
+	for(int i=0; i <N; i++) {
+		for(int j=0; j<M; j++) {
+			printf("%d ",Map[i][j]);
+		}
+		printf("\n");
+	}
+	return;
+}
+
+
+int Solve(void) {
+	int cnt=0;
+	int total=0;
+	rear=front=0;
+
+	Restruct();
+	
+	for(int i=0; i<K; i++) {
+		for(int j=sx[i]; j< ex[i]; j++ ) {
+			for(int k=sy[i]; k< ey[i]; k++) {
+				Map[j][k] = 1;
+			}
+		}
+	}
+	
+	for(int i=0; i<N; i++) {
+		for(int j=0; j<M; j++) {
+			if(Map[i][j] == 2) {
+				FloodFill(i, j);
+				sol[cnt++] = Find();
+				total++;
+			}
+		}
+	}
+	return total;
+}
+
+int main(void){
+    int ans = -1;
+    InputData();//입력받는 부분
+
+    //여기서부터 작성
+    ans = Solve();
+
+    OutputData(ans);//출력하는 부분
+    return 0;
+}
