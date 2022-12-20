@@ -1,0 +1,112 @@
+철도의 역(도시)의 수 N, 도시와 도시를 잇는 철도의 수 M, 추가로 연결시킬 수 있는 철도의 수 K가 주어진다.
+도시와 도시를 잇는 철도는 1 2와 같을 때 1번과 2번 도시는 양방향으로 다닐 수 있다는 의미이다.
+이때 N, M은 최대 50개 까지 주어지며, K는 1~3의 범위를 갖는다
+연결된 상태에 따라 철도의 그룹이 형성이 된다.
+그룹들을 하나로 합쳐서 연결시킬 수 있다.
+추가로 연결할 수 있는 K수 만큼 연결했을 때 만들어지는 최대 연결되는 도시의 수를 출력한다.
+* 입출력 Template이 필요한 경우 C 제출은 다음 코드를 복사하여 코드를 작성하시오.
+#include <stdio.h>
+
+#define MAXN (50)
+int N, M, K;//철도역수, 철도수, 추가로 연결시킬수있는 철도수
+int S[MAXN + 10];
+int E[MAXN + 10];
+
+void InputData(void) {
+    scanf("%d %d %d", &N, &M, &K);
+    for (int i = 0; i < M; i++) {
+        scanf("%d %d", &S[i], &E[i]);
+    }
+}
+int main(void) {
+	int ans = -1;
+    InputData();//입력받는 부분
+
+	// 여기서부터 작성
+	
+    printf("%d\n", ans);// 출력하는 부분
+    return 0;
+}
+* 입출력 Template이 필요한 경우 C++ 제출은 다음 코드를 복사하여 코드를 작성하시오.
+#include <iostream>
+using namespace std;
+
+#define MAXN (50)
+int N, M, K;//철도역수, 철도수, 추가로 연결시킬수있는 철도수
+int S[MAXN + 10];
+int E[MAXN + 10];
+
+void InputData() {
+    cin >> N >> M >> K;
+    for (int i = 0; i < M; i++) {
+        cin >> S[i] >> E[i];
+    }
+}
+int main() {
+	int ans = -1;
+    InputData();//입력받는 부분
+
+	// 여기서부터 작성
+	
+    cout << ans << "\n";// 출력하는 부분
+    return 0;
+}
+* 입출력 Template이 필요한 경우 JAVA 제출은 다음 코드를 복사하여 코드를 작성하시오.
+import java.io.*;
+import java.util.*;
+public class Main {
+	int N, M, K;//철도역수, 철도수, 추가로 연결시킬수있는 철도수
+	int S[];
+	int E[];
+
+	void InputData() throws IOException{
+		BufferedReader bf = new BufferedReader(new InputStreamReader(System.in));
+		String str[] = bf.readLine().split(" ");
+		N = Integer.parseInt(str[0]);
+		M = Integer.parseInt(str[1]);
+		K = Integer.parseInt(str[2]);
+		S = new int[M];
+		E = new int[M];
+		for (int i=0; i<M; i++){
+			str = bf.readLine().split(" ");
+			S[i] = Integer.parseInt(str[0]);
+			E[i] = Integer.parseInt(str[1]);
+		}
+		bf.close();
+	}
+
+	void OutputData(int ans) throws IOException{
+		BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
+		bw.write(String.valueOf(ans) + "\n");
+		bw.flush();
+		bw.close();
+	}
+
+	public static void main(String[] args) throws IOException {
+		int ans = -1;
+		Main m = new Main();
+
+		m.InputData();//입력
+
+		// 여기서부터 작성
+
+		m.OutputData(ans);//출력
+	}
+}
+
+입력 설명
+철도의 역(도시)의 수 N, 도시와 도시를 잇는 철도의 수 M, 추가로 사용할 수 있는 철도의 수 K가 주어진다.
+다음 M개의 줄에는 각 철도에 의해 연결 되어 있는 두 개의 역(도시) 번호가 주어진다.
+
+출력 설명
+최대 연결되는 도시의 수를 출력한다.
+입력 예시
+7 6 1
+1 2
+2 3
+1 5
+5 2
+5 6
+4 7
+출력 예시
+7
