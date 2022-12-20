@@ -1,0 +1,49 @@
+#include <stdio.h>
+#include <stdlib.h>
+#define MAXN ((int)1e5)
+int N;
+int X[MAXN + 10];
+int Y[MAXN + 10];
+void InputData(void){
+    scanf("%d", &N);
+    for (int i=1; i<=N; i++){
+        scanf("%d %d", &X[i], &Y[i]);
+    }
+}
+
+int ABS(int x) {
+	return (x<0) ? -x : x;
+}
+
+int Cal(int s, int e) {
+	return (ABS(X[s]- X[e]) + ABS(Y[s]-Y[e]));
+}
+
+
+int Solve(void) {
+	int total=0;
+	// Find the Total
+	for(int i=1; i<N; i++) {
+		int tmp = Cal(i, i+1);
+		total += tmp;
+	}
+
+	// Calculate the minimum Distance
+	int sum = 0;
+	for(int i=2; i<N; i++) {
+		int dist =  ((Cal(i-1, i) + Cal(i, i+1)) - Cal(i-1, i+1));
+		if(sum < dist) sum = dist;
+	}
+	return total - sum;
+}
+
+int main(void){
+    int ans = -1;
+
+    InputData();//입력받는 부분
+	ans = Solve();
+    //여기서부터 작성
+
+    printf("%d\n", ans);//출력하는 부분
+    return 0;
+}
