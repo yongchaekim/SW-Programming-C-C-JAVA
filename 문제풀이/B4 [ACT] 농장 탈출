@@ -1,0 +1,60 @@
+#include <stdio.h>
+#define MAXN (20)
+int N;
+int W[MAXN+10];
+int sol;
+void InputData(void){
+    scanf("%d", &N);
+    for (int i=0 ; i<N ; i++){
+        scanf("%d", &W[i]);
+    }
+}
+
+int isPossible(int a, int b) {
+	while(a && b) {
+		if(a%10 + b%10 >= 10) return 0;
+		a /= 10;
+		b /= 10;
+	}
+	return 1;
+}
+
+
+void DFSbinary(int n, int cnt, int sum) {
+	if(sol >= cnt + N - n) return; // 가지치기, 이전답 >= 현재까지 태운소 + 남은모든소
+	if(sol < cnt) sol = cnt; // 답 갱신 
+	if(n >= N) { // 종료조건 
+		return;
+	}
+	if(isPossible(sum, W[n]))
+	DFSbinary(n+1, cnt+1, sum+W[n]);  // 태우는 경우 (조건있음, 자리올림 발생 안해야 함) 
+	DFSbinary(n+1, cnt, sum); // 안 태우는 경우
+ 
+}
+
+
+void DFSmulti(int s, int cnt, int sum) {
+	if(sol >= cnt + N - s) return; // 가지치기, 이전답 >= 현재까지 태운소 + 남은모든소 
+	if(sol < cnt) sol = cnt; //답 갱신
+	for(int i=s; i<N; i++) {
+		if(!isPossible(sum, W[i])) continue; // i번소는 자리올림 발생, skip 
+		DFSmulti(i+1, cnt+1, sum+W[i]);
+	}
+} 
+
+int Solve(void) {
+	sol=0;
+	DFSbinary(0, 0, 0); // 소인덱스, 태운마리수, 무게합 
+	return sol;	
+}
+
+int main(void){
+    int ans = -1;
+
+    InputData();// 입력받는 부분
+	ans = Solve();
+    // 여기서부터 작성
+
+    printf("%d\n", ans);//출력하는 부분
+    return 0;
+}
